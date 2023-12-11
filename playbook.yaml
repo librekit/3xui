@@ -38,10 +38,10 @@
         update_cache: yes
         state: latest
 
-    - name: Ensure Python Docker SDK is installed
-      pip:
-        name: docker
-        state: present
+    # - name: Ensure Python Docker SDK is installed
+    #   pip:
+    #     name: docker
+    #     state: present
     - name: Install Docker Compose using pip
       pip:
         name: docker-compose
