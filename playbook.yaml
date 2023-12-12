@@ -22,10 +22,11 @@
       ignore_errors: yes
       timeout: 300  # Set the timeout to 300 seconds (5 minutes)
 
-    - name: Your panel credentials 
+
+    - name: #### Panel password
       debug:
-        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }}"
-    
+        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}} ####>> Username: admin ####>> Password: {{ panel_password }} |####"
+        
     - name: SSL Ensure snapd is installed
       apt:
         name: snapd
