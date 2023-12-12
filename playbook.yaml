@@ -3,9 +3,9 @@
   hosts: all
   become: yes
   vars:
-    panel_domain: "{{3xui_domain}}"
+    panel_domain: "{{ 3xui_domain }}"
     panel_username: "admin"
-    panel_password: "{{3xui_password}}"
+    panel_password: "{{ 3xui_password }}"
     panel_port: "5678"
   tasks:
     - name: Run the Bash Command
