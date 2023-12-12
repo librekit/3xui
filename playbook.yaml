@@ -10,7 +10,7 @@
   tasks:
     - name: Run the Bash Command
       expect:
-        command: "bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)"
+        command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
 
         responses:
           "Do you want to continue with the modification \\[y/n\\]\\? :.*": "y"
