@@ -17,6 +17,7 @@
           'Please set up your username:': '{{ panel_username }}'
           'Please set up your password:': '{{ panel_password }}'
           'Please set up the panel port:': '{{ panel_port }}'
+          'Please set up the web base path.*': '\n'
       register: script_output
       changed_when: false
       ignore_errors: yes
