@@ -7,6 +7,7 @@
     panel_username: "admin"
     panel_password: "{{ panel_password }}"
     panel_port: "5678"
+    panel_web_path: "mypanel"
   tasks:
     - name: Run the Bash Command
       expect:
@@ -17,7 +18,7 @@
           'Please set up your username:': '{{ panel_username }}'
           'Please set up your password:': '{{ panel_password }}'
           'Please set up the panel port:': '{{ panel_port }}'
-          'Please set up the web base path.*': '\n'
+          'Please set up the web base path.*': '{{ panel_web_path }}'
       register: script_output
       changed_when: false
       ignore_errors: yes
