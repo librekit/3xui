@@ -14,7 +14,8 @@
         command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
 
         responses:
-          "Do you want to continue with the modification \\[y/n\\]\\?:.*": "y"
+          # "Do you want to continue with the modification \\[y/n\\]\\?:.*": "y"
+          'Would you like to customize.*': 'y'
           'Please set up your username:': '{{ panel_username }}'
           'Please set up your password:': '{{ panel_password }}'
           'Please set up the panel port:': '{{ panel_port }}'
