@@ -53,13 +53,13 @@
         force: yes
 
 
-    # - name: SSL- Obtain Let's Encrypt SSL Certificate
-    #   shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
+    - name: SSL- Obtain Let's Encrypt SSL Certificate
+      shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
-    # - name: #### Panel password
-    #   debug:
-    #     msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}}/{{panel_web_path}}/ ####>> Username: admin ####>> Password: {{ panel_password }} |####"
+    - name: #### Panel password
+      debug:
+        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}}/{{panel_web_path}}/ ####>> Username: admin ####>> Password: {{ panel_password }} |####"
 
-    # - name: #### SSL certificate
-    #   debug:
-    #     msg: "IMPORTANT ##### Copy this to your panel settings to setup the SSL certificate (HTTPS) ####> Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem ####> Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem  |####"
+    - name: #### SSL certificate
+      debug:
+        msg: "IMPORTANT ##### Copy this to your panel settings to setup the SSL certificate (HTTPS) ####> Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem ####> Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem  |####"
