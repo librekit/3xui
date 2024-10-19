@@ -7,7 +7,7 @@
     panel_username: "admin"
     panel_password: "{{ panel_password }}"
     panel_port: "5678"
-    panel_web_path: "mypanel"
+    panel_web_path: "{{ panel_path }}"
   tasks:
     - name: Run the Bash Command
       expect:
