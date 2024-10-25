@@ -10,26 +10,18 @@
     panel_web_path: "{{ panel_path }}"
   tasks:
     - name: Run the Bash Command
-      expect:
-        command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
-
-        responses:
-          # "Do you want to continue with the modification \\[y/n\\]\\?:.*": "y"
-          'Would you like to customize.*': 'y'
-          'Please set up your username:': '{{ panel_username }}'
-          'Please set up your password:': '{{ panel_password }}'
-          'Please set up the panel port:': '{{ panel_port }}'
-          'Please set up the web base path.*': '{{ panel_web_path }}'
+      command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
       register: script_output
       changed_when: false
       ignore_errors: yes
       timeout: 600  # Set the timeout to 300 seconds (5 minutes)
 
+    - name: Display XUI settings
+      command: "/usr/local/x-ui/x-ui setting -show true"
+      register: xui_settings_output
+      changed_when: false
+      
 
-    - name: #### Panel password
-      debug:
-        msg: "IMPORTANT  ##### PANEL URL >>  {{panel_domain}}:{{panel_port}}/{{panel_web_path}}/ ####>> Username: admin ####>> Password: {{ panel_password }} |####"
-        
     - name: SSL Ensure snapd is installed
       apt:
         name: snapd
