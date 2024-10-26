@@ -17,6 +17,7 @@
       timeout: 600  # Set the timeout to 600 seconds (10 minutes)
 
 
+
     - name: Display XUI settings
       command: "/usr/local/x-ui/x-ui setting -show true"
       register: xui_settings_output
