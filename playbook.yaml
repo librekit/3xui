@@ -9,12 +9,13 @@
     panel_port: "5678"
     panel_web_path: "{{ panel_path }}"
   tasks:
-    - name: Run the Bash Command
-      command: "sh -c 'bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)'"
+    - name: Run the Bash Command to install XUI
+      shell: "bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)"
       register: script_output
       changed_when: false
       ignore_errors: yes
-      timeout: 600  # Set the timeout to 300 seconds (5 minutes)
+      timeout: 600  # Set the timeout to 600 seconds (10 minutes)
+
 
     - name: Display XUI settings
       command: "/usr/local/x-ui/x-ui setting -show true"
