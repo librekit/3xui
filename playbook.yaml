@@ -10,7 +10,7 @@
     panel_web_path: "{{ panel_path }}"
   tasks:
     - name: Run the Bash Command
-      command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
+      command: "sh -c 'bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)'"
       register: script_output
       changed_when: false
       ignore_errors: yes
