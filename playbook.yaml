@@ -9,8 +9,15 @@
     panel_port: "5678"
     panel_web_path: "{{ panel_path }}"
   tasks:
-    - name: Run the Bash Command to install XUI
-      shell: "bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)"
+  
+    - name: Download the installation script
+      get_url:
+        url: https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh
+        dest: /tmp/install.sh
+        mode: '0755'
+    
+    - name: Run the installation script
+      shell: "bash /tmp/install.sh"
       register: script_output
       changed_when: false
       ignore_errors: yes
