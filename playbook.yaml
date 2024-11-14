@@ -17,7 +17,7 @@
         mode: '0755'
     
     - name: Run the installation script
-      shell: "bash /tmp/install.sh"
+      shell: "echo -e 'n\n' | bash /tmp/install.sh"
       register: script_output
       changed_when: false
       ignore_errors: yes
