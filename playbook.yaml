@@ -31,37 +31,37 @@
       changed_when: false
       
 
-    - name: SSL Ensure snapd is installed
-      apt:
-        name: snapd
-        state: present
-        update_cache: yes
-    # - name: Debug script output
-    #   debug:
-    #     var: script_output.stdout_lines
+    # - name: SSL Ensure snapd is installed
+    #   apt:
+    #     name: snapd
+    #     state: present
+    #     update_cache: yes
+    # # - name: Debug script output
+    # #   debug:
+    # #     var: script_output.stdout_lines
 
-    - name: SSL- Install core via Snap
-      shell: "snap install core; snap refresh core"
+    # - name: SSL- Install core via Snap
+    #   shell: "snap install core; snap refresh core"
 
-    - name: SSL- Install Certbot via Snap (Classic)
-      shell: "snap install --classic certbot"
+    # - name: SSL- Install Certbot via Snap (Classic)
+    #   shell: "snap install --classic certbot"
 
-    - name: SSL- Create Symbolic Link for Certbot
-      file:
-        src: /snap/bin/certbot
-        dest: /usr/bin/certbot
-        state: link
-        force: yes
+    # - name: SSL- Create Symbolic Link for Certbot
+    #   file:
+    #     src: /snap/bin/certbot
+    #     dest: /usr/bin/certbot
+    #     state: link
+    #     force: yes
 
 
-    - name: SSL- Obtain Let's Encrypt SSL Certificate
-      shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
+    # - name: SSL- Obtain Let's Encrypt SSL Certificate
+    #   shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
-    - name: #### 3XUI Panel settings
-      command: "/usr/local/x-ui/x-ui setting -show true"
-      register: xui_settings_output
-      changed_when: false
+    # - name: #### 3XUI Panel settings
+    #   command: "/usr/local/x-ui/x-ui setting -show true"
+    #   register: xui_settings_output
+    #   changed_when: false
       
-    - name: #### SSL certificate
-      debug:
-        msg: "IMPORTANT ##### Copy this to your panel settings to setup the SSL certificate (HTTPS) ####> Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem ####> Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem  |####"
+    # - name: #### SSL certificate
+    #   debug:
+    #     msg: "IMPORTANT ##### Copy this to your panel settings to setup the SSL certificate (HTTPS) ####> Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem ####> Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem  |####"
