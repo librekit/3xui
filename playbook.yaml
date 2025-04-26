@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   vars:
-    panel_domain: "{{ xui_domain }}"
+    panel_domain: "{{ external_domain }}"
     panel_username: "admin"
     panel_port: "5678"
   tasks:
