@@ -1,90 +1,67 @@
 ---
-- name: Install 3XUI 
+- name: Install 3XUI with SSL
   hosts: all
   become: yes
   vars:
     panel_domain: "{{ external_domain }}"
     panel_username: "admin"
+    panel_password: "{{ panel_password }}"
     panel_port: "5678"
+    panel_web_path: "{{ panel_path }}"
   tasks:
-   
-     - name: Download the installation script
-       get_url:
-         url: https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh
-         dest: /tmp/install.sh
-         mode: '0755'
-     
-     - name: Run the installation script
-       shell: "echo -e 'n\n' | bash /tmp/install.sh"
-       
-
-    - name: Upgrade all packages to the latest version
-      ansible.builtin.apt:
-        name: "*"
-        state: latest
-      become: yes
-
-    - name: Run the Bash Command to Install XUI with auto-input
-      ansible.builtin.shell: |
-        curl -o install.sh https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh
-        chmod +x install.sh
-        bash install.sh 
-      register: script_output
-      changed_when: false
-      ignore_errors: yes
-
-      register: script_output
-      changed_when: false
-      ignore_errors: yes
-      timeout: 1000
-
-      register: script_output
-      changed_when: false
-      ignore_errors: yes
-      timeout: 1000
-
-    - name: Run the Bash Command to Install XUI
-      command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
-      register: script_output
-      changed_when: false
-      ignore_errors: yes
-      timeout: 1000  # Set the timeout to 1000 seconds (16 minutes)
+  
+    - name: Download the installation script
+      get_url:
+        url: https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh
+        dest: /tmp/install.sh
+        mode: '0755'
     
+    - name: Run the installation script
+      shell: "echo -e 'n\n' | bash /tmp/install.sh"
+      register: script_output
+      changed_when: false
+      ignore_errors: yes
+      
+
+
+
     - name: Display XUI settings
       command: "/usr/local/x-ui/x-ui setting -show true"
       register: xui_settings_output
       changed_when: false
-    
-    - name: Output XUI settings
-      debug:
-        var: xui_settings_output.stdout_lines
+      
 
-    # - name: Ensure snapd is installed
-    #   ansible.builtin.apt:
+    # - name: SSL Ensure snapd is installed
+    #   apt:
     #     name: snapd
     #     state: present
     #     update_cache: yes
+    # # - name: Debug script output
+    # #   debug:
+    # #     var: script_output.stdout_lines
 
-    # - name: Install core via Snap
+    # - name: SSL- Install core via Snap
     #   shell: "snap install core; snap refresh core"
 
-    # - name: Install Certbot via Snap (Classic)
+    # - name: SSL- Install Certbot via Snap (Classic)
     #   shell: "snap install --classic certbot"
 
-    # - name: Create Symbolic Link for Certbot
-    #   ansible.builtin.file:
+    # - name: SSL- Create Symbolic Link for Certbot
+    #   file:
     #     src: /snap/bin/certbot
     #     dest: /usr/bin/certbot
     #     state: link
     #     force: yes
 
-    # - name: Obtain Let's Encrypt SSL Certificate
+
+    # - name: SSL- Obtain Let's Encrypt SSL Certificate
     #   shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
-    # - name: Display SSL certificate paths
+    # - name: #### 3XUI Panel settings
+    #   command: "/usr/local/x-ui/x-ui setting -show true"
+    #   register: xui_settings_output
+    #   changed_when: false
+      
+    # - name: #### SSL certificate
     #   debug:
-    #     msg: "IMPORTANT: Copy this to your panel settings to setup the SSL certificate (HTTPS) -> Public Key File Path: /etc/letsencrypt/live/{{ panel_domain }}/cert.pem -> Private Key File Path: /etc/letsencrypt/live/{{ panel_domain }}/privkey.pem"
-
-    # - name: Output XUI settings
-    #   debug:
-    #     var: xui_settings_output.stdout_lines
+    #     msg: "IMPORTANT ##### Copy this to your panel settings to setup the SSL certificate (HTTPS) ####> Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem ####> Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem  |####"
