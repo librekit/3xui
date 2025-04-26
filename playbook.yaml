@@ -1,5 +1,5 @@
 ---
-- name: Install XUI with SSL
+- name: Install 3XUI 
   hosts: all
   become: yes
   vars:
@@ -7,11 +7,16 @@
     panel_username: "admin"
     panel_port: "5678"
   tasks:
-    - name: Update apt cache
-      ansible.builtin.apt:
-        update_cache: yes
-        cache_valid_time: 3600
-      become: yes
+   
+     - name: Download the installation script
+       get_url:
+         url: https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh
+         dest: /tmp/install.sh
+         mode: '0755'
+     
+     - name: Run the installation script
+       shell: "echo -e 'n\n' | bash /tmp/install.sh"
+       
 
     - name: Upgrade all packages to the latest version
       ansible.builtin.apt:
@@ -27,7 +32,6 @@
       register: script_output
       changed_when: false
       ignore_errors: yes
-      timeout: 1000
 
       register: script_output
       changed_when: false
