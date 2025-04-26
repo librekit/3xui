@@ -1,67 +1,89 @@
 ---
-- name: Install 3XUI with SSL
+- name: Install XUI with SSL
   hosts: all
   become: yes
   vars:
-    panel_domain: "{{ panel_domain }}"
+    panel_domain: "{{ xui_domain }}"
     panel_username: "admin"
-    panel_password: "{{ panel_password }}"
     panel_port: "5678"
-    panel_web_path: "{{ panel_path }}"
   tasks:
-  
-    - name: Download the installation script
-      get_url:
-        url: https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh
-        dest: /tmp/install.sh
-        mode: '0755'
-    
-    - name: Run the installation script
-      shell: "echo -e 'n\n' | bash /tmp/install.sh"
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      become: yes
+
+    - name: Upgrade all packages to the latest version
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+      become: yes
+
+    - name: Run the Bash Command to Install XUI with auto-input
+      ansible.builtin.shell: |
+        curl -o install.sh https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh
+        chmod +x install.sh
+        bash install.sh << 'EOF'
+        y
+        5678
+        EOF
       register: script_output
       changed_when: false
       ignore_errors: yes
-      
+      timeout: 1000
 
+      register: script_output
+      changed_when: false
+      ignore_errors: yes
+      timeout: 1000
 
+      register: script_output
+      changed_when: false
+      ignore_errors: yes
+      timeout: 1000
 
+    - name: Run the Bash Command to Install XUI
+      command: "sh -c 'curl -o install.sh https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh && chmod +x install.sh && ./install.sh'"
+      register: script_output
+      changed_when: false
+      ignore_errors: yes
+      timeout: 1000  # Set the timeout to 1000 seconds (16 minutes)
+    
     - name: Display XUI settings
       command: "/usr/local/x-ui/x-ui setting -show true"
       register: xui_settings_output
       changed_when: false
-      
+    
+    - name: Output XUI settings
+      debug:
+        var: xui_settings_output.stdout_lines
 
-    # - name: SSL Ensure snapd is installed
-    #   apt:
+    # - name: Ensure snapd is installed
+    #   ansible.builtin.apt:
     #     name: snapd
     #     state: present
     #     update_cache: yes
-    # # - name: Debug script output
-    # #   debug:
-    # #     var: script_output.stdout_lines
 
-    # - name: SSL- Install core via Snap
+    # - name: Install core via Snap
     #   shell: "snap install core; snap refresh core"
 
-    # - name: SSL- Install Certbot via Snap (Classic)
+    # - name: Install Certbot via Snap (Classic)
     #   shell: "snap install --classic certbot"
 
-    # - name: SSL- Create Symbolic Link for Certbot
-    #   file:
+    # - name: Create Symbolic Link for Certbot
+    #   ansible.builtin.file:
     #     src: /snap/bin/certbot
     #     dest: /usr/bin/certbot
     #     state: link
     #     force: yes
 
-
-    # - name: SSL- Obtain Let's Encrypt SSL Certificate
+    # - name: Obtain Let's Encrypt SSL Certificate
     #   shell: "certbot certonly --standalone --register-unsafely-without-email --non-interactive --agree-tos -d {{ panel_domain }}"
 
-    # - name: #### 3XUI Panel settings
-    #   command: "/usr/local/x-ui/x-ui setting -show true"
-    #   register: xui_settings_output
-    #   changed_when: false
-      
-    # - name: #### SSL certificate
+    # - name: Display SSL certificate paths
     #   debug:
-    #     msg: "IMPORTANT ##### Copy this to your panel settings to setup the SSL certificate (HTTPS) ####> Public Key File Path: /etc/letsencrypt/live/{{panel_domain}}/cert.pem ####> Private Key File Path: /etc/letsencrypt/live/{{panel_domain}}/privkey.pem  |####"
+    #     msg: "IMPORTANT: Copy this to your panel settings to setup the SSL certificate (HTTPS) -> Public Key File Path: /etc/letsencrypt/live/{{ panel_domain }}/cert.pem -> Private Key File Path: /etc/letsencrypt/live/{{ panel_domain }}/privkey.pem"
+
+    # - name: Output XUI settings
+    #   debug:
+    #     var: xui_settings_output.stdout_lines
